@@ -60,6 +60,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
     private DcMotor leftRear = null;
     private DcMotor rightRear = null;
 
+    private DcMotor armMotor=null;
 
     @Override
     public void runOpMode() {
@@ -73,6 +74,8 @@ public class BasicOpMode_Linear extends LinearOpMode {
         rightFront = hardwareMap.get(DcMotor.class, "right_front");
         leftRear  = hardwareMap.get(DcMotor.class, "left_rear");
         rightRear = hardwareMap.get(DcMotor.class, "right_rear");
+        armMotor = hardwareMap.get(DcMotor.class, "arm_motor");
+
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -82,7 +85,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
         leftRear.setDirection(DcMotor.Direction.REVERSE);
         rightRear.setDirection(DcMotor.Direction.FORWARD);
 
-        // Wait for the game to start (driver presses PLAY)
+        // W ait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
 
@@ -98,7 +101,12 @@ public class BasicOpMode_Linear extends LinearOpMode {
             double rightFrontPower=axial-lateral-yaw;
             double leftRearPower=axial-lateral+yaw;
             double rightRearPower=axial+lateral-yaw;
-
+            if(gamepad1.right_bumper)
+                armMotor.setPower(0.5);
+            if(gamepad1.left_bumper)
+                armMotor.setPower(-0.5);
+            if(gamepad1.x)
+                armMotor.setPower(0);
             double max;
             max=Math.max(Math.abs(leftFrontPower),Math.abs(rightFrontPower));
             max=Math.max(max,Math.abs(leftRearPower));
