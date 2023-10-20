@@ -15,25 +15,24 @@ public class Gripper {
     private final Servo servo_left;
     private final Servo servo_right;
 
-    Gripper(@NonNull final Parameters parameters, Telemetry telemetry)
+
+    Gripper(@NonNull final Parameters parameters)
     {
         this.telemetry = parameters.telemetry;
         this.hardwareMap = parameters.hardwareMap;
 
         servo_left = hardwareMap.get(Servo.class,"servo_left");
         servo_right = hardwareMap.get(Servo.class, "servo_right");
-
-
     }
     public void grab()
     {
-        servo_left.setPosition();
-        servo_right.setPosition();
+        servo_left.setPosition(GRAB_POSITION);
+        servo_right.setPosition(GRAB_POSITION);
     }
     public void release()
     {
-        servo_left.setPosition();
-        servo_right.setPosition();
+        servo_left.setPosition(RELEASE_POSITION);
+        servo_right.setPosition(RELEASE_POSITION);
     }
     public static class Parameters
     {
