@@ -20,7 +20,7 @@ public class Robot {
         telemetry = t;
 
         // --------- initializing the imu sensor --------
-//         BNO055IMU imu_sensor = hardwareMap.get(BNO055IMU.class, "imu_sensor");
+//         BNO055IMU imu_sensor = hardwareM ap.get(BNO055IMU.class, "imu_sensor");
 //         imu_sensor.initialize(new BNO055IMU.Parameters());
 
         // ----- parsing the parameters for initializing the Wheels class ----
