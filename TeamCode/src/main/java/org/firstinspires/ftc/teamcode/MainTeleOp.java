@@ -15,7 +15,8 @@ public class MainTeleOp extends OpMode {
     private Controller controller1;
 
     public double ARM_RAISE_POSITION;
-    private int arm_raise_position;
+    private int arm_raise_position; // TODO: vezi pozitia de pe encodere
+    private int FINAL_POSITION = 6000;
     private ScheduledFuture<?> lastArmMove;
 
     @Override
@@ -44,15 +45,20 @@ public class MainTeleOp extends OpMode {
         if(controller1.AOnce())
         {
             arm_raise_position=1000;
-            robot.arm.raiseArm(arm_raise_position,1);
+            lastArmMove=robot.arm.raiseArm(6000 / 2,1);
         }
         if(controller1.BOnce())
         {
             arm_raise_position=-1000;
-            robot.arm.raiseArm(arm_raise_position,1);
+            lastArmMove=robot.arm.raiseArm(arm_raise_position,1);
         }
 
+        // afisarea de pozitie a encoderului
+        telemetry.addData("Arm position", robot.arm.getCurrentPosition());
+
         robot.wheels.move(y,x,r,true);
+
+        telemetry.update();
     }
 
 }

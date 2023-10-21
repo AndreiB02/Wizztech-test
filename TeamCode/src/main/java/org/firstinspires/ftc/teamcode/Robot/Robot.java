@@ -49,7 +49,6 @@ public class Robot {
         gripper = new Gripper(gripper_parameters);
     }
 
-
     public void stopRobot() {
         wheels.stopEngines();
     }

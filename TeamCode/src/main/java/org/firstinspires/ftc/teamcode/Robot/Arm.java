@@ -20,7 +20,7 @@ public class Arm {
     Arm(@NonNull final Parameters parameters)
     {
         this.hardwareMap = Objects.requireNonNull(parameters.hardwareMap, "HardwareMap was not set up");
-        this.telemetry = parameters.telemetry;
+        this.telemetry = Objects.requireNonNull(parameters.telemetry, "Telemetry was not set");
         this.scheduler = Objects.requireNonNull(parameters.scheduler, "Scheduler was not set");
 
         arm_motor = hardwareMap.get(DcMotor.class,"arm_motor");
@@ -46,6 +46,15 @@ public class Arm {
 
         return lastArmMove;
     }
+
+    public int getCurrentPosition() {
+        return arm_motor.getCurrentPosition();
+    }
+
+    public void move(double speed) {
+        arm_motor.setPower(speed);
+    }
+
     public void intake_position()
     {
 
