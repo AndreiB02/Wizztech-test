@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import java.util.concurrent.ScheduledExecutorService;
+
 public class Gripper {
     private final double RELEASE_POSITION = 0.0;
     private final double GRAB_POSITION = 0.0;
@@ -38,5 +40,6 @@ public class Gripper {
     {
         public HardwareMap hardwareMap;
         public Telemetry telemetry;
+        public ScheduledExecutorService scheduler;
     }
 }

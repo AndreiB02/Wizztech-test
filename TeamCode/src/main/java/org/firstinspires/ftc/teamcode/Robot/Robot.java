@@ -14,6 +14,9 @@ public class Robot {
     public Telemetry telemetry;
 
     public Wheels wheels;
+    public Gripper gripper;
+    public Arm arm;
+
     public Imu imu;
 
     public Robot(final HardwareMap hardwareMap, final Telemetry t, ScheduledExecutorService scheduler) {
@@ -31,6 +34,19 @@ public class Robot {
         wheels_parameters.rpm = 435;
         wheels = new Wheels(wheels_parameters);
 
+        // ----- parsing the parameters for initializing the Arm class ----
+        Arm.Parameters arm_parameters = new Arm.Parameters();
+        arm_parameters.hardwareMap = hardwareMap;
+        arm_parameters.telemetry = telemetry;
+        arm_parameters.scheduler = scheduler;
+        arm = new Arm(arm_parameters);
+
+         //----- parsing the parameters for initializing the Gripper class ----
+        Gripper.Parameters gripper_parameters = new Gripper.Parameters();
+        gripper_parameters.hardwareMap = hardwareMap;
+        gripper_parameters.telemetry = telemetry;
+        gripper_parameters.scheduler = scheduler;
+        gripper = new Gripper(gripper_parameters);
     }
 
 

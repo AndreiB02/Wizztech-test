@@ -6,13 +6,17 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.teamcode.Robot.*;
 
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledFuture;
 
-@TeleOp(name="MainTeleOp")
+@TeleOp(name="CenterStage")
 public class MainTeleOp extends OpMode {
     private Robot robot;
 
     private Controller controller1;
 
+    public double ARM_RAISE_POSITION;
+    private int arm_raise_position;
+    private ScheduledFuture<?> lastArmMove;
 
     @Override
     public void init(){
@@ -36,6 +40,17 @@ public class MainTeleOp extends OpMode {
         double x = controller1.left_stick_x;
         double y = controller1.left_stick_y;
         double r = -controller1.right_stick_x;
+
+        if(controller1.AOnce())
+        {
+            arm_raise_position=1000;
+            robot.arm.raiseArm(arm_raise_position,1);
+        }
+        if(controller1.BOnce())
+        {
+            arm_raise_position=-1000;
+            robot.arm.raiseArm(arm_raise_position,1);
+        }
 
         robot.wheels.move(y,x,r,true);
     }
