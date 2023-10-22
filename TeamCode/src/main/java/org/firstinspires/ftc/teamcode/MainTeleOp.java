@@ -17,6 +17,8 @@ public class MainTeleOp extends OpMode {
     private int raise_value;
 
     private int FINAL_POSITION = 6000;
+
+    public double RAISE_POWER =  0.5;
     private ScheduledFuture<?> lastRightMove,lastLeftMove;
 
     @Override
@@ -55,9 +57,15 @@ public class MainTeleOp extends OpMode {
 
 
         // afisarea de pozitie a encoderului
-        telemetry.addData("Arm position", robot.slider.getCurrentPosition());
 
-        robot.wheels.move(y,x,r,true);
+
+        lastLeftMove = robot.slider.raiseLeftSlider(raise_value, RAISE_POWER);
+        lastRightMove = robot.slider.raiseRightSlider(raise_value, RAISE_POWER);
+
+        telemetry.addData("SliderLeft position", robot.slider.getCurrentPositionLeft());
+        telemetry.addData("SliderRight position", robot.slider.getCurrentPositionRight());
+
+        robot.wheels.move(x,y,r,true);
 
         telemetry.update();
     }
