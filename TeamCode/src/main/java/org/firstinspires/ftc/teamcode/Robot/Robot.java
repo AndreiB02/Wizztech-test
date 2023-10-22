@@ -14,8 +14,8 @@ public class Robot {
     public Telemetry telemetry;
 
     public Wheels wheels;
-    public Gripper gripper;
-    public Arm arm;
+  //  public Gripper gripper;
+    public Slider slider;
 
     public Imu imu;
 
@@ -35,18 +35,18 @@ public class Robot {
         wheels = new Wheels(wheels_parameters);
 
         // ----- parsing the parameters for initializing the Arm class ----
-        Arm.Parameters arm_parameters = new Arm.Parameters();
-        arm_parameters.hardwareMap = hardwareMap;
-        arm_parameters.telemetry = telemetry;
-        arm_parameters.scheduler = scheduler;
-        arm = new Arm(arm_parameters);
+        Slider.Parameters slider_parameters = new Slider.Parameters();
+        slider_parameters.hardwareMap = hardwareMap;
+        slider_parameters.telemetry = telemetry;
+        slider_parameters.scheduler = scheduler;
+        slider = new Slider(slider_parameters);
 
          //----- parsing the parameters for initializing the Gripper class ----
-        Gripper.Parameters gripper_parameters = new Gripper.Parameters();
-        gripper_parameters.hardwareMap = hardwareMap;
-        gripper_parameters.telemetry = telemetry;
-        gripper_parameters.scheduler = scheduler;
-        gripper = new Gripper(gripper_parameters);
+//        Gripper.Parameters gripper_parameters = new Gripper.Parameters();
+//        gripper_parameters.hardwareMap = hardwareMap;
+//        gripper_parameters.telemetry = telemetry;
+//        gripper_parameters.scheduler = scheduler;
+//        gripper = new Gripper(gripper_parameters);
     }
 
     public void stopRobot() {

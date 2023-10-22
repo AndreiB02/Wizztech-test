@@ -14,10 +14,10 @@ public class MainTeleOp extends OpMode {
 
     private Controller controller1;
 
-    public double ARM_RAISE_POSITION;
-    private int arm_raise_position; // TODO: vezi pozitia de pe encodere
+    private int raise_value;
+
     private int FINAL_POSITION = 6000;
-    private ScheduledFuture<?> lastArmMove;
+    private ScheduledFuture<?> lastRightMove,lastLeftMove;
 
     @Override
     public void init(){
@@ -42,19 +42,20 @@ public class MainTeleOp extends OpMode {
         double y = controller1.left_stick_y;
         double r = -controller1.right_stick_x;
 
-        if(controller1.AOnce())
-        {
-            arm_raise_position=1000;
-            lastArmMove=robot.arm.raiseArm(6000 / 2,1);
-        }
-        if(controller1.BOnce())
-        {
-            arm_raise_position=-1000;
-            lastArmMove=robot.arm.raiseArm(arm_raise_position,1);
-        }
+        if(!Utils.isDone(lastLeftMove) || !Utils.isDone(lastRightMove)) { return ; }
+        else if (controller1.YOnce()) { raise_value = 4200; }
+        else if (controller1.BOnce()) { raise_value = 3000; }
+        else if (controller1.XOnce()) { raise_value = 1400; }
+        else if (controller1.AOnce()) { raise_value = 0; }
+        else if (raise_value <= 4000 && controller1.right_trigger != 0.0) {
+            raise_value = (int) (raise_value + controller1.right_trigger * 1000);
+        } else if (raise_value >= 0 && controller1.left_trigger != 0.0) {
+            raise_value = (int) (raise_value - controller1.left_trigger * 1000);
+        } else { return ; }
+
 
         // afisarea de pozitie a encoderului
-        telemetry.addData("Arm position", robot.arm.getCurrentPosition());
+        telemetry.addData("Arm position", robot.slider.getCurrentPosition());
 
         robot.wheels.move(y,x,r,true);
 

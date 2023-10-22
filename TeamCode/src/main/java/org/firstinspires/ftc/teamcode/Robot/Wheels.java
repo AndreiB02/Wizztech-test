@@ -53,10 +53,10 @@ public class Wheels {
         imu_sensor.loop();
 
         // --------- setting up the engines individually -----
-        lf = setEngine(map, true, false, DcMotor.Direction.FORWARD, "left_front");
+        lf = setEngine(map, true, false, DcMotor.Direction.REVERSE, "left_front");
         lr = setEngine(map, true, false,DcMotor.Direction.REVERSE, "left_rear");
         rf = setEngine(map, true, false,DcMotorSimple.Direction.FORWARD, "right_front");
-        rr = setEngine(map, true, false,DcMotorSimple.Direction.REVERSE, "right_rear");
+        rr = setEngine(map, true, false,DcMotorSimple.Direction.FORWARD, "right_rear");
 
     }
 
