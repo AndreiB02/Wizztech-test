@@ -55,6 +55,11 @@ public class MainTeleOp extends OpMode {
             raise_value = (int) (raise_value - controller1.left_trigger * 1000);
         } else { return ; }
 
+        if(controller1.dpadDownOnce())
+        {
+            telemetry.addData("SliderLeft position", robot.slider.getCurrentPositionLeft());
+            telemetry.addData("SliderRight position", robot.slider.getCurrentPositionRight());
+        }
 
         // afisarea de pozitie a encoderului
 
