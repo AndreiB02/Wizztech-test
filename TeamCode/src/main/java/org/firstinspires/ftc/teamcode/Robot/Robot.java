@@ -16,6 +16,8 @@ public class Robot {
     public Wheels wheels;
   //  public Gripper gripper;
     public Slider slider;
+//    public Plane plane;
+
 
     public Imu imu;
 

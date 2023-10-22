@@ -40,6 +40,5 @@
 //    {
 //        public HardwareMap hardwareMap;
 //        public Telemetry telemetry;
-//        public ScheduledExecutorService scheduler;
 //    }
 //}

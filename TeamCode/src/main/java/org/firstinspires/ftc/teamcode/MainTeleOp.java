@@ -16,7 +16,8 @@ public class MainTeleOp extends OpMode {
 
     private int raise_value;
 
-    private int FINAL_POSITION = 6000;
+    private int MAX_POSITION_LEFT;
+    private int MAX_POSITION_RIGHT= 4250;
 
     public double RAISE_POWER =  0.5;
     private ScheduledFuture<?> lastRightMove,lastLeftMove;
@@ -40,32 +41,24 @@ public class MainTeleOp extends OpMode {
     {
         controller1.update();
 
+        // -------getting controller movement input---------
         double x = controller1.left_stick_x;
         double y = controller1.left_stick_y;
         double r = -controller1.right_stick_x;
-
+        //--------setting target value for slider----------
         if(!Utils.isDone(lastLeftMove) || !Utils.isDone(lastRightMove)) { return ; }
-        else if (controller1.YOnce()) { raise_value = 4200; }
-        else if (controller1.BOnce()) { raise_value = 3000; }
-        else if (controller1.XOnce()) { raise_value = 1400; }
+        else if (controller1.XOnce()) { raise_value = 4276; }
         else if (controller1.AOnce()) { raise_value = 0; }
-        else if (raise_value <= 4000 && controller1.right_trigger != 0.0) {
-            raise_value = (int) (raise_value + controller1.right_trigger * 1000);
-        } else if (raise_value >= 0 && controller1.left_trigger != 0.0) {
-            raise_value = (int) (raise_value - controller1.left_trigger * 1000);
-        } else { return ; }
+        else { return;}
 
-        if(controller1.dpadDownOnce())
-        {
+        if(controller1.dpadDownOnce()) {
             telemetry.addData("SliderLeft position", robot.slider.getCurrentPositionLeft());
             telemetry.addData("SliderRight position", robot.slider.getCurrentPositionRight());
         }
 
-        // afisarea de pozitie a encoderului
-
-
-        lastLeftMove = robot.slider.raiseLeftSlider(raise_value, RAISE_POWER);
-        lastRightMove = robot.slider.raiseRightSlider(raise_value, RAISE_POWER);
+        //-----------moving the slider-------
+        lastLeftMove = robot.slider.raiseLeftSlider(0, RAISE_POWER);
+        lastRightMove = robot.slider.raiseRightSlider(raise_value, 0.7);
 
         telemetry.addData("SliderLeft position", robot.slider.getCurrentPositionLeft());
         telemetry.addData("SliderRight position", robot.slider.getCurrentPositionRight());
