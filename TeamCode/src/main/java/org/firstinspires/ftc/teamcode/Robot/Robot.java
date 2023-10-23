@@ -14,9 +14,9 @@ public class Robot {
     public Telemetry telemetry;
 
     public Wheels wheels;
-  //  public Gripper gripper;
+    //public Gripper gripper;
     public Slider slider;
-//    public Plane plane;
+    //public Plane plane;
 
 
     public Imu imu;
@@ -49,10 +49,19 @@ public class Robot {
 //        gripper_parameters.telemetry = telemetry;
 //        gripper_parameters.scheduler = scheduler;
 //        gripper = new Gripper(gripper_parameters);
+
+        //----- parsing the parameters for initializing the Plane class ----
+//        Plane.Parameters plane_parameters = new Plane.Parameters();
+//        plane_parameters.hardwareMap = hardwareMap;
+//        plane_parameters.telemetry = telemetry;
+//        plane =  new Plane(plane_parameters);
     }
 
     public void stopRobot() {
         wheels.stopEngines();
+        slider.stopSlider();
+//        gripper.stopGripper();
+//        plane.stopPlane();
     }
 
 }

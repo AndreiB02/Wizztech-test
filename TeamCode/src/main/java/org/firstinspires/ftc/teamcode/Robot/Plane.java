@@ -32,7 +32,10 @@ public class Plane {
     public void release() {
         servo.setPosition(RELEASE_POSITION);
     }
-
+    public void stopPlane()
+    {
+        servo.close();
+    }
     public static class Parameters {
         Telemetry telemetry;
         HardwareMap hardwareMap;

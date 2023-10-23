@@ -76,6 +76,12 @@ public class Slider {
     public int getCurrentPositionRight() {
         return  right_slider.getCurrentPosition();
     }
+
+    public void stopSlider()
+    {
+        left_slider.setPower(0.0);
+        right_slider.setPower(0.0);
+    }
     public static class Parameters{
         public HardwareMap hardwareMap;
         public Telemetry telemetry;
