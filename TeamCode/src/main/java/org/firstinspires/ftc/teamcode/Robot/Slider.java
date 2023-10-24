@@ -15,7 +15,7 @@ public class Slider {
     private final HardwareMap hardwareMap;
     private final Telemetry telemetry;
 
-    private final DcMotor left_slider, right_slider;
+    public final DcMotor left_slider, right_slider;
     private final ScheduledExecutorService scheduler;
     private ScheduledFuture<?> lastRightMove = null, lastLeftMove = null;
     Slider(@NonNull final Parameters parameters)
@@ -25,14 +25,14 @@ public class Slider {
         this.scheduler = Objects.requireNonNull(parameters.scheduler, "Scheduler was not set");
 
         left_slider = hardwareMap.get(DcMotor.class,"left_slider");
-        left_slider.setDirection(DcMotorSimple.Direction.REVERSE);
+        left_slider.setDirection(DcMotorSimple.Direction.FORWARD);
         left_slider.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        left_slider.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        left_slider.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         right_slider = hardwareMap.get(DcMotor.class,"right_slider");
-        right_slider.setDirection(DcMotorSimple.Direction.FORWARD);
+        right_slider.setDirection(DcMotorSimple.Direction.REVERSE);
         right_slider.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        right_slider.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        right_slider.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public ScheduledFuture<?> raiseLeftSlider(int targetPositionValue, double raisePower)
