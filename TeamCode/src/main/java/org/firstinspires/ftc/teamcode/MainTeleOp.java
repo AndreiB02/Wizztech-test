@@ -45,16 +45,19 @@ public class MainTeleOp extends OpMode {
         double x = controller1.left_stick_x;
         double y = controller1.left_stick_y;
         double r = -controller1.right_stick_x;
+
+        robot.wheels.move(x,y,r,true);
+
         //--------setting target value for slider----------
         if(!Utils.isDone(lastLeftMove) || !Utils.isDone(lastRightMove)) { return ; }
         else if (controller1.XOnce()) { raise_value = 4276; }
         else if (controller1.AOnce()) { raise_value = 0; }
         else { return;}
 
-        if(controller1.dpadDownOnce()) {
-            telemetry.addData("SliderLeft position", robot.slider.getCurrentPositionLeft());
-            telemetry.addData("SliderRight position", robot.slider.getCurrentPositionRight());
-        }
+//        if(controller1.dpadDownOnce()) {
+//            telemetry.addData("SliderLeft position", robot.slider.getCurrentPositionLeft());
+//            telemetry.addData("SliderRight position", robot.slider.getCurrentPositionRight());
+//        }
 
         //-----------moving the slider-------
         lastLeftMove = robot.slider.raiseLeftSlider(0, RAISE_POWER);
@@ -62,8 +65,6 @@ public class MainTeleOp extends OpMode {
 
         telemetry.addData("SliderLeft position", robot.slider.getCurrentPositionLeft());
         telemetry.addData("SliderRight position", robot.slider.getCurrentPositionRight());
-
-        robot.wheels.move(x,y,r,true);
 
         telemetry.update();
     }

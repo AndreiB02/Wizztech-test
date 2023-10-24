@@ -24,6 +24,8 @@ public class Slider {
         this.telemetry = Objects.requireNonNull(parameters.telemetry, "Telemetry was not set");
         this.scheduler = Objects.requireNonNull(parameters.scheduler, "Scheduler was not set");
 
+        // TODO: check the direction of every slider
+        // TODO: change the ZeroPowerBehaviour for each slider
         left_slider = hardwareMap.get(DcMotor.class,"left_slider");
         left_slider.setDirection(DcMotorSimple.Direction.REVERSE);
         left_slider.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -37,13 +39,16 @@ public class Slider {
 
     public ScheduledFuture<?> raiseLeftSlider(int targetPositionValue, double raisePower)
     {
-        if(!Utils.isDone(lastLeftMove) && !lastLeftMove.cancel(true))
+        if(!Utils.isDone(lastLeftMove) && !lastLeftMove.cancel(true)) {
             return null;
+        }
 
         int initialPosition = left_slider.getCurrentPosition();
 
-        if(targetPositionValue == initialPosition)
+        if(targetPositionValue == initialPosition) {
             return null;
+        }
+
         left_slider.setTargetPosition(targetPositionValue);
         left_slider.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         left_slider.setPower(targetPositionValue > initialPosition ? raisePower : -raisePower);
@@ -54,13 +59,16 @@ public class Slider {
     }
     public ScheduledFuture<?> raiseRightSlider(int targetPositionValue, double raisePower)
     {
-        if(!Utils.isDone(lastRightMove) && !lastRightMove.cancel(true))
+        if(!Utils.isDone(lastRightMove) && !lastRightMove.cancel(true)) {
             return null;
+        }
 
         int initialPosition = right_slider.getCurrentPosition();
 
-        if(targetPositionValue == initialPosition)
+        if(targetPositionValue == initialPosition) {
             return null;
+        }
+
         right_slider.setTargetPosition(targetPositionValue);
         right_slider.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         right_slider.setPower(targetPositionValue > initialPosition ? raisePower : -raisePower);
@@ -71,10 +79,10 @@ public class Slider {
     }
 
     public int getCurrentPositionLeft() {
-        return  left_slider.getCurrentPosition();
+        return left_slider.getCurrentPosition();
     }
     public int getCurrentPositionRight() {
-        return  right_slider.getCurrentPosition();
+        return right_slider.getCurrentPosition();
     }
 
     public void stopSlider()
