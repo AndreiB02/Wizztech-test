@@ -29,7 +29,6 @@ public class MainTeleOp extends OpMode {
         );
 
         controller1 = new Controller(gamepad1);
-
     }
 
     public void stop(){ robot.stopRobot();}
@@ -45,6 +44,12 @@ public class MainTeleOp extends OpMode {
         double r = -controller1.right_stick_x;
         robot.wheels.move(x,-y,-r,true);
 
+
+        if (controller1.leftBumper()) {
+            robot.gripper.grab();
+        } else if (controller1.rightBumper()) {
+            robot.gripper.release();
+        }
 
         //--------setting target value for slider----------
         if(!Utils.isDone(lastLeftMove) || !Utils.isDone(lastRightMove)) { return ; }

@@ -8,8 +8,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.util.concurrent.ScheduledExecutorService;
 
 public class Gripper {
-    private final double RELEASE_POSITION = 0.0;
-    private final double GRAB_POSITION = 0.0;
+    private final double RELEASE_POSITION = -1.0;
+    private final double GRAB_POSITION = 1.0;
 
     private final Telemetry  telemetry;
     private final HardwareMap hardwareMap;
@@ -24,7 +24,10 @@ public class Gripper {
         this.hardwareMap = parameters.hardwareMap;
 
         servo_left = hardwareMap.get(Servo.class,"servo_left");
+        servo_left.setDirection(Servo.Direction.FORWARD);
+
         servo_right = hardwareMap.get(Servo.class, "servo_right");
+        servo_right.setDirection(Servo.Direction.REVERSE);
     }
     public void grab()
     {

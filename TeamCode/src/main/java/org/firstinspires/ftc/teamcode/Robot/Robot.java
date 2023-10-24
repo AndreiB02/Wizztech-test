@@ -14,7 +14,7 @@ public class Robot {
     public Telemetry telemetry;
 
     public Wheels wheels;
-    //public Gripper gripper;
+    public Gripper gripper;
     public Slider slider;
     //public Plane plane;
 
@@ -44,11 +44,10 @@ public class Robot {
         slider = new Slider(slider_parameters);
 
          //----- parsing the parameters for initializing the Gripper class ----
-//        Gripper.Parameters gripper_parameters = new Gripper.Parameters();
-//        gripper_parameters.hardwareMap = hardwareMap;
-//        gripper_parameters.telemetry = telemetry;
-//        gripper_parameters.scheduler = scheduler;
-//        gripper = new Gripper(gripper_parameters);
+        Gripper.Parameters gripper_parameters = new Gripper.Parameters();
+        gripper_parameters.hardwareMap = hardwareMap;
+        gripper_parameters.telemetry = telemetry;
+        gripper = new Gripper(gripper_parameters);
 
         //----- parsing the parameters for initializing the Plane class ----
 //        Plane.Parameters plane_parameters = new Plane.Parameters();
