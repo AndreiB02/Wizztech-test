@@ -38,20 +38,27 @@ public class MainTeleOp extends OpMode {
     {
         controller1.update();
 
-        // -------getting controller movement input---------
+        // ------- getting controller movement input ---------
         double x = controller1.left_stick_x;
         double y = controller1.left_stick_y;
         double r = -controller1.right_stick_x;
         robot.wheels.move(x,-y,-r,true);
 
-
+        // ----------- controlling the outtake system -----------
         if (controller1.leftBumper()) {
-            robot.gripper.grab();
+            robot.outtake.setRotationPercentage(100);
         } else if (controller1.rightBumper()) {
-            robot.gripper.release();
+            robot.outtake.setRotationPercentage(50);
         }
 
-        //--------setting target value for slider----------
+        // ----------- controlling the intake system -----------
+        if (controller1.dpadUpOnce()) {
+            robot.intake.release();
+        } else if (controller1.dpadDownOnce()) {
+            robot.intake.grab();
+        }
+
+        // -------- setting target value for slider ----------
         if(!Utils.isDone(lastLeftMove) || !Utils.isDone(lastRightMove)) { return ; }
         else if (controller1.AOnce()) { raise_value = 0; }
         else if (controller1.XOnce()) { raise_value = (int)(MAX_POSITION / 4); }
@@ -59,7 +66,7 @@ public class MainTeleOp extends OpMode {
         else if (controller1.YOnce()) { raise_value = MAX_POSITION; }
         else { return;}
 
-        //-----------moving the slider-------
+        // ----------- moving the slider -------
         lastLeftMove = robot.slider.raiseLeftSlider(raise_value, RAISE_POWER);
         lastRightMove = robot.slider.raiseRightSlider(raise_value, RAISE_POWER);
 
