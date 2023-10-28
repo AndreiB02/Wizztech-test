@@ -15,7 +15,7 @@ public class Plane {
     private final Servo servo;
 
 
-    private final double RELEASE_POSITION = 0.0;
+    private final double RELEASE_POSITION = 0.3;
     private final double GRAB_POSITION = 0.0;
 
     Plane(@NonNull final Parameters parameters) {
@@ -23,6 +23,8 @@ public class Plane {
         this.hardwareMap = Objects.requireNonNull(parameters.hardwareMap, "hardwareMap was not set");
 
         servo = hardwareMap.get(Servo.class, "plane_servo");
+        servo.setDirection(Servo.Direction.FORWARD);
+
     }
 
     public void grab() {

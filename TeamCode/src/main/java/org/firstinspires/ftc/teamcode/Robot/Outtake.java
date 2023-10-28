@@ -26,16 +26,18 @@ public class Outtake {
         outtake_right = hardwareMap.get(Servo.class, "servo_right");
         outtake_right.setDirection(Servo.Direction.REVERSE);
     }
-    public void setRotationPercentage(int percentage) {
-        outtake_left.setPosition((double)((percentage * MAX_ROTATION) / 100));
-        outtake_right.setPosition((double)((percentage * MAX_ROTATION) / 100));
+    public void setRotationPercentage(int percentageLeft, int percentageRight) {
+        outtake_left.setPosition((double)((percentageLeft * MAX_ROTATION) / 100));
+        outtake_right.setPosition((double)((percentageRight * MAX_ROTATION) / 100));
     }
 
     public void resetPosition() {
         outtake_left.setPosition(RESET_POSITION);
         outtake_right.setPosition(RESET_POSITION);
     }
-
+    public double getPosition(){
+        return outtake_left.getPosition();
+    }
     public void stopOuttake() {
         outtake_left.close();
         outtake_right.close();

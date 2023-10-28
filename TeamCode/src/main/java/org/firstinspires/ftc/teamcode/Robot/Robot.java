@@ -16,9 +16,12 @@ public class Robot {
     public Outtake outtake;
     public Intake intake;
     public Slider slider;
+    public Plane plane;
+    public IntakeHands intakeHands;
+    public Raiser raiser;
 
 
-    public Imu imu;
+  //  public Imu imu;
 
     public Robot(final HardwareMap hardwareMap, final Telemetry t, ScheduledExecutorService scheduler) {
         telemetry = t;
@@ -54,14 +57,29 @@ public class Robot {
         intake_parameters.telemetry = telemetry;
         intake = new Intake(intake_parameters);
 
-        // TODO: add plane servo
+        //---- parsing the parameters for initializing the IntakeHands class ---
+        IntakeHands.Parameters intakeHands_parameters = new IntakeHands.Parameters();
+        intakeHands_parameters.hardwareMap = hardwareMap;
+        intakeHands_parameters.telemetry = telemetry;
+        intakeHands = new IntakeHands(intakeHands_parameters);
+
+        Plane.Parameters  plane_parameters = new Plane.Parameters();
+        plane_parameters.telemetry = telemetry;
+        plane_parameters.hardwareMap = hardwareMap;
+        plane = new Plane(plane_parameters);
+
+        Raiser.Parameters raiser_parameters=  new Raiser.Parameters();
+        raiser_parameters.telemetry = telemetry;
+        raiser_parameters.hardwareMap = hardwareMap;
+        raiser_parameters.scheduler = scheduler;
+        raiser = new Raiser(raiser_parameters);
     }
 
     public void stopRobot() {
         wheels.stopEngines();
         slider.stopSlider();
 //        gripper.stopGripper();
-//        plane.stopPlane();
+        plane.stopPlane();
     }
 
 }

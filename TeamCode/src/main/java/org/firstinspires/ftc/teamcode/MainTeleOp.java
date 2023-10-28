@@ -15,10 +15,13 @@ public class MainTeleOp extends OpMode {
     private Controller controller1;
 
     private int raise_value = 0;
-
+    private int raiser_value_raiser = 0;
     private int MAX_POSITION = 4100;
     public double RAISE_POWER =  1;
+
+    private boolean isActiveLeftHand = true, isActiveRightHand = true ;
     private ScheduledFuture<?> lastRightMove, lastLeftMove;
+    private ScheduledFuture<?> lastRightMoveRaiser, lastLeftMoveRaiser;
 
     @Override
     public void init(){
@@ -46,9 +49,9 @@ public class MainTeleOp extends OpMode {
 
         // ----------- controlling the outtake system -----------
         if (controller1.leftBumper()) {
-            robot.outtake.setRotationPercentage(100);
+            robot.outtake.setRotationPercentage(87,89);
         } else if (controller1.rightBumper()) {
-            robot.outtake.setRotationPercentage(50);
+            robot.outtake.setRotationPercentage(15,17);
         }
 
         // ----------- controlling the intake system -----------
@@ -58,17 +61,55 @@ public class MainTeleOp extends OpMode {
             robot.intake.grab();
         }
 
+        // ----------- controlling the plane launching system -----------
+        if(controller1.XOnce()){
+            robot.plane.release();
+        }
+
+//        // ----------- controlling the intake hands blocking system -------
+        if (controller1.dpadLeftOnce()) {
+            if(isActiveLeftHand) {
+                robot.intakeHands.releaseLeft();
+                isActiveLeftHand = false;
+            }
+            else {
+                robot.intakeHands.grabLeft();
+                isActiveLeftHand = true;
+            }
+        }
+        if (controller1.dpadRightOnce()) {
+            if(isActiveRightHand){
+                robot.intakeHands.releaseRight();
+                isActiveRightHand = false;
+            }
+            else {
+                robot.intakeHands.grabRight();
+                isActiveRightHand = true;
+            }
+        }
+
+
+
         // -------- setting target value for slider ----------
         if(!Utils.isDone(lastLeftMove) || !Utils.isDone(lastRightMove)) { return ; }
         else if (controller1.AOnce()) { raise_value = 0; }
-        else if (controller1.XOnce()) { raise_value = (int)(MAX_POSITION / 4); }
         else if (controller1.BOnce()) { raise_value = (int)(MAX_POSITION / 2); }
         else if (controller1.YOnce()) { raise_value = MAX_POSITION; }
         else { return;}
 
+        if(!Utils.isDone(lastLeftMoveRaiser) || !Utils.isDone(lastRightMoveRaiser)) { return ; }
+        else if(raiser_value_raiser<=4000 && controller1.right_trigger != 0.0){ raiser_value_raiser = 400; telemetry.addData("set raiser value to 400",400);}
+        else if(raiser_value_raiser>=0 && controller1.left_trigger !=0.0){raiser_value_raiser = 0;}
+        else { return;}
+
         // ----------- moving the slider -------
+
         lastLeftMove = robot.slider.raiseLeftSlider(raise_value, RAISE_POWER);
         lastRightMove = robot.slider.raiseRightSlider(raise_value, RAISE_POWER);
+
+        //--------- moving the raiser
+        lastLeftMoveRaiser = robot.raiser.raiseLeftRaiser(raiser_value_raiser,RAISE_POWER);
+        lastRightMoveRaiser = robot.raiser.raiseRightRaiser(raiser_value_raiser,RAISE_POWER);
 
         telemetry.addData("SliderLeft position", robot.slider.left_slider.getCurrentPosition());
         telemetry.addData("SliderRight position", robot.slider.right_slider.getCurrentPosition());

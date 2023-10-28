@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Intake {
-    private final double RELEASE_POSITION = 1.0;
+    private final double RELEASE_POSITION = 0.8;
     private final double GRAB_POSITION = 0.0;
 
     private final Telemetry telemetry;
