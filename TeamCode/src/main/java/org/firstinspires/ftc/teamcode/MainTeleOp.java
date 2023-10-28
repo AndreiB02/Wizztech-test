@@ -97,6 +97,9 @@ public class MainTeleOp extends OpMode {
         else if (controller1.YOnce()) { raise_value = MAX_POSITION; }
         else { return;}
 
+        lastLeftMove = robot.slider.raiseLeftSlider(raise_value, RAISE_POWER);
+        lastRightMove = robot.slider.raiseRightSlider(raise_value, RAISE_POWER);
+        
         if(!Utils.isDone(lastLeftMoveRaiser) || !Utils.isDone(lastRightMoveRaiser)) { return ; }
         else if(raiser_value_raiser<=4000 && controller1.right_trigger != 0.0){ raiser_value_raiser = 400; telemetry.addData("set raiser value to 400",400);}
         else if(raiser_value_raiser>=0 && controller1.left_trigger !=0.0){raiser_value_raiser = 0;}
@@ -104,8 +107,6 @@ public class MainTeleOp extends OpMode {
 
         // ----------- moving the slider -------
 
-        lastLeftMove = robot.slider.raiseLeftSlider(raise_value, RAISE_POWER);
-        lastRightMove = robot.slider.raiseRightSlider(raise_value, RAISE_POWER);
 
         //--------- moving the raiser
         lastLeftMoveRaiser = robot.raiser.raiseLeftRaiser(raiser_value_raiser,RAISE_POWER);
