@@ -11,14 +11,14 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-public class Raiser {
+public class Lifter {
     private final HardwareMap hardwareMap;
     private final Telemetry telemetry;
 
     public final DcMotor left_raiser, right_raiser;
     private final ScheduledExecutorService scheduler;
     private ScheduledFuture<?> lastRightMoveRaiser = null, lastLeftMoveRaiser = null;
-    Raiser(@NonNull final Parameters parameters)
+    Lifter(@NonNull final Parameters parameters)
     {
         this.hardwareMap = Objects.requireNonNull(parameters.hardwareMap, "HardwareMap was not set up");
         this.telemetry = Objects.requireNonNull(parameters.telemetry, "Telemetry was not set");

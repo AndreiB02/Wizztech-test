@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Intake {
-    private final double RELEASE_POSITION = 0.8;
-    private final double GRAB_POSITION = 0.0;
+    private final double RELEASE_POSITION_LEFT = 0.5,RELEASE_POSITION_RIGHT = 0.4;
+    private final double GRAB_POSITION_LEFT = 0.0,GRAB_POSITION_RIGHT = 0.0;
 
     private final Telemetry telemetry;
     private final HardwareMap hardwareMap;
@@ -27,13 +27,13 @@ public class Intake {
     }
 
     public void grab() {
-        intake_right.setPosition(GRAB_POSITION);
-        intake_left.setPosition(GRAB_POSITION);
+        intake_right.setPosition(GRAB_POSITION_RIGHT);
+        intake_left.setPosition(GRAB_POSITION_LEFT);
     }
 
     public void release() {
-        intake_right.setPosition(RELEASE_POSITION);
-        intake_left.setPosition(RELEASE_POSITION);
+        intake_right.setPosition(RELEASE_POSITION_RIGHT);
+        intake_left.setPosition(RELEASE_POSITION_LEFT);
     }
 
     public void stopIntake() {

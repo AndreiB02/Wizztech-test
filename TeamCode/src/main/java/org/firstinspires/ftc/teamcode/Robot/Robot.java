@@ -18,7 +18,7 @@ public class Robot {
     public Slider slider;
     public Plane plane;
     public IntakeHands intakeHands;
-    public Raiser raiser;
+    public Lifter raiser;
 
 
   //  public Imu imu;
@@ -68,11 +68,11 @@ public class Robot {
         plane_parameters.hardwareMap = hardwareMap;
         plane = new Plane(plane_parameters);
 
-        Raiser.Parameters raiser_parameters=  new Raiser.Parameters();
+        Lifter.Parameters raiser_parameters=  new Lifter.Parameters();
         raiser_parameters.telemetry = telemetry;
         raiser_parameters.hardwareMap = hardwareMap;
         raiser_parameters.scheduler = scheduler;
-        raiser = new Raiser(raiser_parameters);
+        raiser = new Lifter(raiser_parameters);
     }
 
     public void stopRobot() {

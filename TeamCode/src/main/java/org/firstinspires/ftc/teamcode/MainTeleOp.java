@@ -17,9 +17,10 @@ public class MainTeleOp extends OpMode {
     private int raise_value = 0;
     private int raiser_value_raiser = 0;
     private int MAX_POSITION = 4100;
+    private int RAISER_MAX_VALUE = 16000;
     public double RAISE_POWER =  1;
 
-    private boolean isActiveLeftHand = true, isActiveRightHand = true ;
+    private boolean isActiveHand = true, isActiveIntake = true;
     private ScheduledFuture<?> lastRightMove, lastLeftMove;
     private ScheduledFuture<?> lastRightMoveRaiser, lastLeftMoveRaiser;
 
@@ -49,54 +50,66 @@ public class MainTeleOp extends OpMode {
 
         // ----------- controlling the outtake system -----------
         if (controller1.leftBumper()) {
-            robot.outtake.setRotationPercentage(87,89);
+            robot.outtake.setRotationPercentage(98,100);
         } else if (controller1.rightBumper()) {
             robot.outtake.setRotationPercentage(15,17);
         }
 
-        // ----------- controlling the intake system -----------
-        if (controller1.dpadUpOnce()) {
-            robot.intake.release();
-        } else if (controller1.dpadDownOnce()) {
-            robot.intake.grab();
-        }
+//        // ----------- controlling the intake system -----------
+//        if (controller1.dpadUpOnce()) {
+//            robot.intake.release();
+//        } else if (controller1.dpadDownOnce()) {
+//            robot.intake.grab();
+//        }
+//        if (controller1.dpadUpOnce()) {
+//            if(isActiveIntake) {
+//                robot.intake.release();
+//                isActiveIntake= false;
+//            }
+//            else {
+//                robot.intake.grab();
+//                isActiveIntake = true;
+//            }
+//        }
 
-        // ----------- controlling the plane launching system -----------
-        if(controller1.XOnce()){
-            robot.plane.release();
-        }
+//        // ----------- controlling the plane launching system -----------
+//        if(controller1.XOnce()){
+//            robot.plane.release();
+//        }
 
 //        // ----------- controlling the intake hands blocking system -------
         if (controller1.dpadLeftOnce()) {
-            if(isActiveLeftHand) {
+            if(isActiveHand) {
                 robot.intakeHands.releaseLeft();
-                isActiveLeftHand = false;
+                robot.intakeHands.releaseRight();
+                isActiveHand = false;
             }
             else {
                 robot.intakeHands.grabLeft();
-                isActiveLeftHand = true;
-            }
-        }
-        if (controller1.dpadRightOnce()) {
-            if(isActiveRightHand){
-                robot.intakeHands.releaseRight();
-                isActiveRightHand = false;
-            }
-            else {
                 robot.intakeHands.grabRight();
-                isActiveRightHand = true;
+                isActiveHand = true;
             }
         }
+
 
 
         // -------- setting target value for slider ----------
         if(!Utils.isDone(lastLeftMove) || !Utils.isDone(lastRightMove) || !Utils.isDone(lastLeftMoveRaiser) || !Utils.isDone(lastRightMoveRaiser)) { return ; }
-        else if (controller1.AOnce()) { raise_value = 0; }
-        else if (controller1.BOnce()) { raise_value = (int)(MAX_POSITION / 2); }
+        else if (controller1.AOnce()) {
+            raise_value = 0;
+            robot.outtake.setDefaultPosition();
+        }
+        else if (controller1.BOnce()) {
+            raise_value = (int)(MAX_POSITION / 2);
+            robot.outtake.setDefaultPosition();
+        }
         else if (controller1.YOnce()) { raise_value = MAX_POSITION; }
-        else if(raiser_value_raiser<=4000 && controller1.right_trigger != 0.0){ raiser_value_raiser = 400; telemetry.addData("set raiser value to 400",400);}
-        else if(raiser_value_raiser>=0 && controller1.left_trigger !=0.0){raiser_value_raiser = 0;}
+        else if(controller1.dpadUpOnce()){ raiser_value_raiser = RAISER_MAX_VALUE;}
+        else if(controller1.dpadDownOnce()){raiser_value_raiser = 0;}
+        else if(controller1.XOnce()){raiser_value_raiser = -2000;}
         else { return;}
+
+
 
         lastLeftMove = robot.slider.raiseLeftSlider(raise_value, RAISE_POWER);
         lastRightMove = robot.slider.raiseRightSlider(raise_value, RAISE_POWER);
@@ -106,6 +119,8 @@ public class MainTeleOp extends OpMode {
 
         telemetry.addData("SliderLeft position", robot.slider.left_slider.getCurrentPosition());
         telemetry.addData("SliderRight position", robot.slider.right_slider.getCurrentPosition());
+
+        telemetry.addData("Raiser position", robot.raiser.left_raiser.getCurrentPosition());
         telemetry.update();
     }
 

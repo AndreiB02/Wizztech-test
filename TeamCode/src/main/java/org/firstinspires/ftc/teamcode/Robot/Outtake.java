@@ -31,6 +31,10 @@ public class Outtake {
         outtake_right.setPosition((double)((percentageRight * MAX_ROTATION) / 100));
     }
 
+   public void setDefaultPosition() {
+        setRotationPercentage(35, 37);
+   }
+
     public void resetPosition() {
         outtake_left.setPosition(RESET_POSITION);
         outtake_right.setPosition(RESET_POSITION);
