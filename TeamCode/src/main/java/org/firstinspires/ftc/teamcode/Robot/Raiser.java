@@ -30,7 +30,7 @@ public class Raiser {
         left_raiser.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         right_raiser = hardwareMap.get(DcMotor.class,"right_raiser");
-        right_raiser.setDirection(DcMotorSimple.Direction.REVERSE);
+        right_raiser.setDirection(DcMotorSimple.Direction.FORWARD);
         right_raiser.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right_raiser.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
