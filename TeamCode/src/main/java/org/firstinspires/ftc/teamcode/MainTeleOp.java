@@ -89,26 +89,18 @@ public class MainTeleOp extends OpMode {
         }
 
 
-
         // -------- setting target value for slider ----------
-        if(!Utils.isDone(lastLeftMove) || !Utils.isDone(lastRightMove)) { return ; }
+        if(!Utils.isDone(lastLeftMove) || !Utils.isDone(lastRightMove) || !Utils.isDone(lastLeftMoveRaiser) || !Utils.isDone(lastRightMoveRaiser)) { return ; }
         else if (controller1.AOnce()) { raise_value = 0; }
         else if (controller1.BOnce()) { raise_value = (int)(MAX_POSITION / 2); }
         else if (controller1.YOnce()) { raise_value = MAX_POSITION; }
+        else if(raiser_value_raiser<=4000 && controller1.right_trigger != 0.0){ raiser_value_raiser = 400; telemetry.addData("set raiser value to 400",400);}
+        else if(raiser_value_raiser>=0 && controller1.left_trigger !=0.0){raiser_value_raiser = 0;}
         else { return;}
 
         lastLeftMove = robot.slider.raiseLeftSlider(raise_value, RAISE_POWER);
         lastRightMove = robot.slider.raiseRightSlider(raise_value, RAISE_POWER);
         
-        if(!Utils.isDone(lastLeftMoveRaiser) || !Utils.isDone(lastRightMoveRaiser)) { return ; }
-        else if(raiser_value_raiser<=4000 && controller1.right_trigger != 0.0){ raiser_value_raiser = 400; telemetry.addData("set raiser value to 400",400);}
-        else if(raiser_value_raiser>=0 && controller1.left_trigger !=0.0){raiser_value_raiser = 0;}
-        else { return;}
-
-        // ----------- moving the slider -------
-
-
-        //--------- moving the raiser
         lastLeftMoveRaiser = robot.raiser.raiseLeftRaiser(raiser_value_raiser,RAISE_POWER);
         lastRightMoveRaiser = robot.raiser.raiseRightRaiser(raiser_value_raiser,RAISE_POWER);
 
