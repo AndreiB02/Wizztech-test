@@ -18,7 +18,9 @@ public class MainTeleOp extends OpMode {
     private int raiser_value_raiser = 0;
     private int MAX_POSITION = 4100;
     private int RAISER_MAX_VALUE = 16000;
+    private int PERCENTAGE_LEFT = 100,PERCENTAGE_RIGHT=92;
     public double RAISE_POWER =  1;
+    private int outakePosition, defaultPosition = 35;
 
     private boolean isActiveHand = true, isActiveIntake = true;
     private ScheduledFuture<?> lastRightMove, lastLeftMove;
@@ -50,9 +52,12 @@ public class MainTeleOp extends OpMode {
 
         // ----------- controlling the outtake system -----------
         if (controller1.leftBumper()) {
-            robot.outtake.setRotationPercentage(98,100);
+            outakePosition = 100;
+        robot.outtake.setRotationPercentage(PERCENTAGE_LEFT,PERCENTAGE_RIGHT);
         } else if (controller1.rightBumper()) {
-            robot.outtake.setRotationPercentage(15,17);
+            if(raise_value>2000){
+                outakePosition = 0;
+            robot.outtake.setRotationPercentage(0,0);}
         }
 
 //        // ----------- controlling the intake system -----------
@@ -61,16 +66,16 @@ public class MainTeleOp extends OpMode {
 //        } else if (controller1.dpadDownOnce()) {
 //            robot.intake.grab();
 //        }
-//        if (controller1.dpadUpOnce()) {
-//            if(isActiveIntake) {
-//                robot.intake.release();
-//                isActiveIntake= false;
-//            }
-//            else {
-//                robot.intake.grab();
-//                isActiveIntake = true;
-//            }
-//        }
+        if (controller1.dpadRightOnce()) {
+            if(isActiveIntake) {
+                robot.intake.release();
+                isActiveIntake= false;
+            }
+            else {
+                robot.intake.grab();
+                isActiveIntake = true;
+            }
+        }
 
 //        // ----------- controlling the plane launching system -----------
 //        if(controller1.XOnce()){
@@ -97,16 +102,22 @@ public class MainTeleOp extends OpMode {
         if(!Utils.isDone(lastLeftMove) || !Utils.isDone(lastRightMove) || !Utils.isDone(lastLeftMoveRaiser) || !Utils.isDone(lastRightMoveRaiser)) { return ; }
         else if (controller1.AOnce()) {
             raise_value = 0;
+            outakePosition = defaultPosition;
             robot.outtake.setDefaultPosition();
+            robot.intake.grab();
         }
         else if (controller1.BOnce()) {
-            raise_value = (int)(MAX_POSITION / 2);
-            robot.outtake.setDefaultPosition();
+            if (outakePosition>15) {
+                robot.outtake.setDefaultPosition();
+                outakePosition = defaultPosition;
+                raise_value = (int)(MAX_POSITION / 1.4);
+                robot.intake.grab();
+            }
         }
         else if (controller1.YOnce()) { raise_value = MAX_POSITION; }
         else if(controller1.dpadUpOnce()){ raiser_value_raiser = RAISER_MAX_VALUE;}
         else if(controller1.dpadDownOnce()){raiser_value_raiser = 0;}
-        else if(controller1.XOnce()){raiser_value_raiser = -2000;}
+        else if(controller1.XOnce()){robot.plane.release();}
         else { return;}
 
 

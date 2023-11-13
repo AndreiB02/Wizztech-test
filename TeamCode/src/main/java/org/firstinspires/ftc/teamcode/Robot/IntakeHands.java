@@ -9,9 +9,9 @@ public class IntakeHands {
     private final Servo inHandLeft, inHandRight;
     private HardwareMap hardwareMap;
     private Telemetry telemetry;
-    private final double GRAB_POSITION_LEFT=0.6;
-    private final double RELEASE_POSITION_LEFT=0.8;
-    private final double GRAB_POSITION_RIGHT=0.43;
+    private final double GRAB_POSITION_LEFT=0.62;
+    private final double RELEASE_POSITION_LEFT=0.75;
+    private final double GRAB_POSITION_RIGHT=0.45;
     private final double RELEASE_POSITION_RIGHT=0.55;
     private final double MAX_ROTATION=1;
 

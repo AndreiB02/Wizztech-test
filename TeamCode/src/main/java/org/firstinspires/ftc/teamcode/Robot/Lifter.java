@@ -25,12 +25,12 @@ public class Lifter {
         this.scheduler = Objects.requireNonNull(parameters.scheduler, "Scheduler was not set raiser");
 
         left_raiser = hardwareMap.get(DcMotor.class,"left_raiser");
-        left_raiser.setDirection(DcMotorSimple.Direction.FORWARD);
+        left_raiser.setDirection(DcMotorSimple.Direction.REVERSE);
         left_raiser.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         left_raiser.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         right_raiser = hardwareMap.get(DcMotor.class,"right_raiser");
-        right_raiser.setDirection(DcMotorSimple.Direction.FORWARD);
+        right_raiser.setDirection(DcMotorSimple.Direction.REVERSE);
         right_raiser.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right_raiser.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
